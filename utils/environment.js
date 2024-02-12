@@ -8,6 +8,7 @@ module.exports = {
     MENU_BASE_URL: process.env.MENU_BASE_URL,
 
     DEVELOPMENT_CLIENT_URL: process.env.DEVELOPMENT_CLIENT_URL,
-    PRODUCTION_CLIENT_URL: process.env.PRODUCTION_CLIENT_URL
+    PRODUCTION_CLIENT_URL: process.env.PRODUCTION_CLIENT_URL,
+    APPID: process.env.APPID
 
 }

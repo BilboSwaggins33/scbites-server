@@ -1,10 +1,8 @@
 const Realm = require('realm-web')
-const atlasConfig = require("./atlasConfig.json")
-
-const {appId} = atlasConfig;
+const {APPID} = require("./environment")
 
 const app = new Realm.App({
-    id: appId,
+    id: APPID,
 });
 
 module.exports = app;
