@@ -1,0 +1,89 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 90vh;
+  margin: 0;
+}
+
+a {
+  color: #00B7FF;
+}
+@font-face {
+  font-family: "source-sans-pro";
+  src: url(https://fonts.cdnfonts.com/s/12183/SourceSansPro-Regular.woff) format("woff");
+}
+
+.toolbar {
+  height: 64px;
+  background-color: #990000;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80%;
+}
+
+.sub-container {
+  padding: 20px;
+  border-width: thin;
+  border-color: #ddd;
+  border-radius: 5px;
+  border-style:solid;
+  margin:10px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-input {
+  margin-top: 10px;
+  padding: 11px;
+  font-size: medium;
+  border-width: thin;
+  border-color: #ddd;
+  border-radius: 5px;
+  border-style:solid;
+}
+
+.password-input:focus {
+  outline-color: #990000;
+}
+
+.submit-button {
+  margin-top: 20px;
+  background-color: #990000;
+  border-radius: 5px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 35px;
+  line-height: 15px;
+  list-style: none;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.submit-button:hover,
+.submit-button:focus {
+  background-color: #bb3333;
+}

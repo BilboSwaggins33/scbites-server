@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+    function pageRedirect() {
+        window.location.replace('<%= url %>');
+    }
+
+    pageRedirect()
+    setTimeout("pageRedirect()", 0);
+</script>
+</body>
+</html>
