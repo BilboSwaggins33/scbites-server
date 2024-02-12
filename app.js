@@ -20,7 +20,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 
 
+const Realm = require('realm-web')
+const {APPID} = require("/utils/environment")
 
+const realmApp = new Realm.App({
+  id: APPID,
+});
 app.use(function(req, res, next) {
   next(createError(404));
 });

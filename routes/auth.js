@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
-const app = require('../utils/realmApp')
+const Realm = require('realm')
+const {APPID} = require("../utils/environment")
+const app = Realm.App.getApp(APPID)
 const {DEVELOPMENT_CLIENT_URL, PRODUCTION_CLIENT_URL} = require("../utils/environment")
 router.get('/confirmEmail', async function(req, res, next) {
   const token = req.query.token;
