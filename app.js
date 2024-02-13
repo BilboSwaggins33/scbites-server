@@ -4,8 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const authRouter = require('./routes/auth');
-const {sendEmails} = require('./routes/menus');
-const nodeCron = require('node-cron');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -38,9 +36,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-nodeCron.schedule('0 0 1 * * *', () => {
-  sendEmails().then(r=> r)
-})
 
 
 module.exports = app;
