@@ -14,7 +14,7 @@ router.get('/confirmEmail', async function(req, res, next) {
   } catch (err) {
     console.log(`User confirmation failed: ${err}`);
   }
-  res.render('redirect.ejs', {url: DEVELOPMENT_CLIENT_URL});
+  res.render('redirect.ejs', {url: PRODUCTION_CLIENT_URL});
 });
 
 
@@ -33,7 +33,7 @@ router.get('/resetPassword', async function(req, res, next) {
         tokenId,
       })
       console.log("Successfully reset password.")
-      res.render('redirect.ejs', {url: DEVELOPMENT_CLIENT_URL})
+      res.render('redirect.ejs', {url: PRODUCTION_CLIENT_URL})
     } catch(err) {
       console.log(err)
       res.render('reset.ejs', {token: token, tokenId: tokenId, error: err.error});
