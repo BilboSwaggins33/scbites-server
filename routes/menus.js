@@ -1,9 +1,8 @@
 const cheerio = require('cheerio');
 const axios = require('axios')
 
-const {BASE_URL} = require('../utils/environment')
+const {MENU_BASE_URL} = require('../utils/environment')
 
-const base_url = BASE_URL;
 const mongoClient = require("../utils/mongoClient")
 const {LegendConstantsFlipped, LocationsFlipped, Locations} = require("../constants/legend")
 const transporter = require("../utils/sesClient")
@@ -59,7 +58,7 @@ function includesTag(arr, userTags) {
 async function scrape(location) {
     try {
         let currentDate = new Date().toLocaleDateString();
-        const {data} = await axios.get(`${base_url}${location}&menu_date=${currentDate}`);
+        const {data} = await axios.get(`${MENU_BASE_URL}${location}&menu_date=${currentDate}`);
         const $ = cheerio.load(data);
         const menuElements = $("ul.menu-item-list > li");
         let menuItems = []
@@ -118,6 +117,7 @@ async function sendEmails() {
                 ...foundVillage,
                 ...foundEvk
             ]
+
 
             let emailFormat = {
                 body: {
