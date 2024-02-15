@@ -2,20 +2,11 @@ const cheerio = require('cheerio');
 const axios = require('axios')
 
 const {MENU_BASE_URL} = require('../utils/environment')
-
+const ejs = require('ejs')
 const mongoClient = require("../utils/mongoClient")
 const {LegendConstantsFlipped, LocationsFlipped, Locations} = require("../constants/legend")
 const transporter = require("../utils/sesClient")
-const Mailgen = require('mailgen')
-
-let mailGenerator = new Mailgen({
-    theme: 'default',
-    product: {
-        name: 'scbites',
-        link: 'https://mailgen.js/'
-        // logo: 'https://mailgen.js/img/logo.png'
-    }
-});
+const path = require('path')
 
 async function grabUserData() {
 
@@ -92,76 +83,67 @@ async function sendEmails() {
 
 
             let foundParkside = parksideItems.filter((item) => {
-                return includesTag(item.tags, user.tags) ||
-                    user.keywords.some((word) =>
-                        item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
-                        word.summary.toUpperCase().includes(item.name.toUpperCase()))
+                return includesTag(item.tags, user.tags)
             })
 
             let foundVillage = villageItems.filter((item) => {
-                return includesTag(item.tags, user.tags) ||
-                    user.keywords.some((word) =>
-                        item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
-                        word.summary.toUpperCase().includes(item.name.toUpperCase()))
+                return includesTag(item.tags, user.tags)
             })
 
             let foundEvk = evkItems.filter((item) => {
-                return includesTag(item.tags, user.tags) ||
-                    user.keywords.some((word) =>
+                return includesTag(item.tags, user.tags)
+            })
+
+            let keywordParkside = parksideItems.filter((item) => {
+                return user.keywords.some((word) =>
                         item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
                         word.summary.toUpperCase().includes(item.name.toUpperCase()))
             })
 
-            const emailData = [
+            let keywordVillage = villageItems.filter((item) => {
+                return user.keywords.some((word) =>
+                    item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
+                    word.summary.toUpperCase().includes(item.name.toUpperCase()))
+            })
+
+            let keywordEvk = evkItems.filter((item) => {
+                return user.keywords.some((word) =>
+                    item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
+                    word.summary.toUpperCase().includes(item.name.toUpperCase()))
+            })
+
+            const emailData = [...new Set([
+                ...keywordParkside,
+                ...keywordVillage,
+                ...keywordEvk,
                 ...foundParkside,
                 ...foundVillage,
                 ...foundEvk
-            ]
+            ])]
 
 
-            let emailFormat = {
-                body: {
-                    intro: "Don't miss your next bite! Here are your dishes today and where you can find them!",
-                    table: {
-                        data: emailData,
-                        columns: {
-                            // Optionally, customize the column widths
-                            customWidth: {
-                                name: '30%',
-                                tags: '60%'
-                            },
-                            // Optionally, change column text alignment
-                            customAlignment: {
-                                location: 'right'
-                            }
+
+
+
+            ejs.renderFile(path.resolve(__dirname, '../views/emailTemplate.ejs'), {emailData: emailData, userData: user, legend: LegendConstantsFlipped}, (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+
+                    transporter.sendMail(
+                        {
+                            from: "scbitesinfo@gmail.com",
+                            to: user.email,
+                            subject: "Your daily scbite.",
+                            html: data
+                        },
+                        (err) => {
+                            console.log("error:", err)
                         }
-                    },
-                    outro: 'Have questions, feedback, or need help? Email us at scbitesinfo@gmail.com, we\'d love to help.  \n Visit our website to unsubscribe.'
+                    );
                 }
-            };
+            })
 
-            let emailBody = mailGenerator.generate(emailFormat);
-
-            transporter.sendMail(
-                {
-                    from: "scbitesinfo@gmail.com",
-                    to: user.email,
-                    subject: "Your daily scbite.",
-                    html: emailBody,
-                    ses: {
-                        // optional extra arguments for SendRawEmail
-                        Tags: [
-                            {
-                                Name: "tag_name",
-                                Value: "tag_value",
-                            },
-                        ],
-                    },
-                },
-                (err) => {
-                    console.log("error:", err)
-                }
-            );
 
         }
 

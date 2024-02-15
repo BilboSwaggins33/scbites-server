@@ -1,0 +1,75 @@
+
+@font-face {
+    font-family: "source-sans-pro-bold";
+    src: url(https://fonts.cdnfonts.com/s/12183/SourceSansPro-Semibold.woff) format("woff");
+}
+
+@font-face {
+    font-family: "source-sans-pro-regular";
+    src: url(https://fonts.cdnfonts.com/s/12183/SourceSansPro-Regular.woff) format("woff");
+}
+
+body {
+    font-family: "source-sans-pro-regular", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 600px
+}
+
+.divider {
+    border-top: 3px solid #FFFFFF29;
+    width: 100%
+}
+
+.section1 {
+    background-color: #990000;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.section1-title {
+    padding: 30px
+}
+
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.website-button-container {
+    padding: 50px;
+}
+
+.website-button {
+    background-color: #FFF;
+    border: none;
+    color: #990000;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 30px;
+    font-family: source-sans-pro-bold, serif;
+    text-decoration: none;
+}
+
+.section2 {
+    background-color: white;
+    margin: 0;
+    width: 100%;
+}
+
+.section2-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.section2-table {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 3fr 1fr
+}
