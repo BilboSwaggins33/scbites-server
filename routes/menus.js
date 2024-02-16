@@ -72,6 +72,8 @@ async function scrape(location) {
 }
 
 
+
+//FEATURE switch to pdf form
 async function sendEmails() {
     const userData = await grabUserData();
     const parksideItems = await scrape(Locations.PARKSIDE);
