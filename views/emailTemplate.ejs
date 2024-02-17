@@ -758,9 +758,7 @@
                                                                                                                                    cellspacing="0"
                                                                                                                                    role="presentation">
                                                                                                                                 <tr>
-                                                                                                                                    <% let filteredTags = emailData[i].tags.filter((tag) => {
-                                                                                                                                        return userData.tags[legend[tag]]
-                                                                                                                                    }) %>
+                                                                                                                                    <% let filteredTags = emailData[i].tags.filter((tag) => {return userData.tags[legend[tag]]}) %>
                                                                                                                                     <% for (let j = 0; j < filteredTags.length; j++) { %>
 
                                                                                                                                         <td valign="top"

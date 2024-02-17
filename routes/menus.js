@@ -7,6 +7,9 @@ const mongoClient = require("../utils/mongoClient")
 const {LegendConstantsFlipped, LocationsFlipped, Locations} = require("../constants/legend")
 const transporter = require("../utils/sesClient")
 const path = require('path')
+const fs = require('fs')
+const puppeteer = require('puppeteer')
+
 
 async function grabUserData() {
 
@@ -71,19 +74,56 @@ async function scrape(location) {
 
 }
 
+async function getPdf(emailData, userData) {
+
+    let browser;
+
+    try {
+        browser = await puppeteer.launch();
+        const [page] = await browser.pages();
+        return await ejs.renderFile(path.resolve(__dirname, '../views/template.ejs'),
+            {emailData: emailData, userData: userData, legend: LegendConstantsFlipped},
+            async (err, data) => {
+                console.log(data)
+                if (err) {
+                    console.log(err)
+                }
+                await page.setContent(data);
+                return await page.pdf({format: "A4"})
+            })
+
+    } finally {
+        // Close browser.
+        await browser?.close();
+    }
+
+
+}
 
 
 //FEATURE switch to pdf form
 async function sendEmails() {
+    const villagepic = fs.readFileSync(`${process.cwd()}/public/images/village_dining.jpg`).toString('base64')
+    const evkpic = fs.readFileSync(`${process.cwd()}/public/images/evk_dining.jpg`).toString('base64')
+    const parksidepic = fs.readFileSync(`${process.cwd()}/public/images/parkside_dining.jpg`).toString('base64')
+    const pics = {
+        parkside: parksidepic,
+        evk: evkpic,
+        village: villagepic
+    }
+
     const userData = await grabUserData();
     const parksideItems = await scrape(Locations.PARKSIDE);
     const villageItems = await scrape(Locations.VILLAGE);
     const evkItems = await scrape(Locations.EVK);
 
+
+    let browser;
+    browser = await puppeteer.launch();
+    const [page] = await browser.pages();
+
     for (let user of userData) {
         if (user.isActive) {
-
-
             let foundParkside = parksideItems.filter((item) => {
                 return includesTag(item.tags, user.tags)
             })
@@ -98,8 +138,8 @@ async function sendEmails() {
 
             let keywordParkside = parksideItems.filter((item) => {
                 return user.keywords.some((word) =>
-                        item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
-                        word.summary.toUpperCase().includes(item.name.toUpperCase()))
+                    item.name.toUpperCase().includes(word.summary.toUpperCase()) ||
+                    word.summary.toUpperCase().includes(item.name.toUpperCase()))
             })
 
             let keywordVillage = villageItems.filter((item) => {
@@ -114,42 +154,62 @@ async function sendEmails() {
                     word.summary.toUpperCase().includes(item.name.toUpperCase()))
             })
 
-            const emailData = [...new Set([
+            const emailData = [
                 ...keywordParkside,
                 ...keywordVillage,
                 ...keywordEvk,
                 ...foundParkside,
                 ...foundVillage,
                 ...foundEvk
-            ])]
+            ]
 
+            function isDuplicate(entry, arr) {
+                return arr.some(x => (entry.name === x.name) && (entry.location === x.location))
+            }
 
+            let uniqueData = [];
 
-
-
-            ejs.renderFile(path.resolve(__dirname, '../views/emailTemplate.ejs'), {emailData: emailData, userData: user, legend: LegendConstantsFlipped}, (err, data) => {
-                if (err) {
-                    console.log(err);
-                } else {
-
-                    transporter.sendMail(
-                        {
-                            from: "scbitesinfo@gmail.com",
-                            to: user.email,
-                            subject: "Your daily scbite.",
-                            html: data
-                        },
-                        (err) => {
-                            console.log("error:", err)
-                        }
-                    );
+            for (const item of emailData) {
+                if (!isDuplicate(item, uniqueData)) {
+                    uniqueData.push(item);
                 }
-            })
+            }
+
+
+
+            const html = await ejs.renderFile(path.resolve(__dirname, '../views/template.ejs'),
+                {emailData: uniqueData, userData: user, legend: LegendConstantsFlipped, pic: pics});
+            await page.setContent(html);
+            //await page.addStyleTag({path: path.resolve(__dirname, '../public/stylesheets/template.css')})
+
+            const pdf = await page.pdf({printBackground: true});
+
+            try {
+                transporter.sendMail(
+                    {
+                        from: "scbitesinfo@gmail.com",
+                        to: user.email,
+                        subject: "Your daily bite.",
+                        attachments: [{
+                            filename: "menu.pdf",
+                            content: pdf
+                        }]
+                    },
+                    (err) => {
+                        console.log("error:", err)
+                    }
+                );
+            } catch {
+                console.log(err)
+            }
+
 
 
         }
 
     }
+
+    await browser?.close();
 
 }
 

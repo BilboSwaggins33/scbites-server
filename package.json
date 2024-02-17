@@ -21,6 +21,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.9",
     "nodemon": "^3.0.3",
+    "puppeteer": "^22.0.0",
     "realm": "^12.6.0",
     "realm-web": "^2.0.0"
   }
