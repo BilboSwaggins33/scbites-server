@@ -4,7 +4,6 @@ const Realm = require('realm')
 const {APPID} = require("../utils/environment")
 const app = Realm.App.getApp(APPID)
 const {DEVELOPMENT_CLIENT_URL, PRODUCTION_CLIENT_URL} = require("../utils/environment")
-const {sendEmails} = require("./menus");
 
 
 router.get('/confirmEmail', async function (req, res, next) {
@@ -43,11 +42,6 @@ router.get('/resetPassword', async function (req, res, next) {
 
         }
     }
-})
-
-router.get('/testing', async function (req, res, next) {
-   sendEmails().then(r => r)
-    res.send("ok")
 })
 
 
