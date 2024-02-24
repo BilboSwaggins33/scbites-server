@@ -74,32 +74,6 @@ async function scrape(location) {
 
 }
 
-async function getPdf(emailData, userData) {
-
-    let browser;
-
-    try {
-        browser = await puppeteer.launch();
-        const [page] = await browser.pages();
-        return await ejs.renderFile(path.resolve(__dirname, '../views/template.ejs'),
-            {emailData: emailData, userData: userData, legend: LegendConstantsFlipped},
-            async (err, data) => {
-                console.log(data)
-                if (err) {
-                    console.log(err)
-                }
-                await page.setContent(data);
-                return await page.pdf({format: "A4"})
-            })
-
-    } finally {
-        // Close browser.
-        await browser?.close();
-    }
-
-
-}
-
 
 //FEATURE switch to pdf form
 async function sendEmails() {
