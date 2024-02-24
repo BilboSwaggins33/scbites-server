@@ -57,14 +57,23 @@ async function scrape(location) {
         const menuElements = $("ul.menu-item-list > li");
         let menuItems = []
         menuElements.each((idx, el) => {
+
             const item = $(el)
+
+            const mealTypeParent = item.parentsUntil('div.col-sm-6 col-md-4');
+            const mealTypeChild = mealTypeParent.children('h3.menu-venue-title');
+            const mealTypeText = mealTypeChild.first().contents().filter(function () {
+                return this.type === 'text';
+            }).text()
+
+
             let tags = item.find("i").map(function (i, v) {
                 return $(v).text()
             }).get()
             menuItems.push({
                 name: item.first().contents().filter(function () {
                     return this.type === 'text';
-                }).text(), tags: tags, location: LocationsFlipped[location]
+                }).text(), tags: tags, location: LocationsFlipped[location], meal: mealTypeText
             })
         })
         return menuItems
@@ -154,8 +163,6 @@ async function sendEmails() {
                 }
             }
 
-
-
             const html = await ejs.renderFile(path.resolve(__dirname, '../views/template.ejs'),
                 {emailData: uniqueData, userData: user, legend: LegendConstantsFlipped, pic: pics});
             await page.setContent(html);
@@ -181,7 +188,6 @@ async function sendEmails() {
             } catch {
                 console.log(err)
             }
-
 
 
         }

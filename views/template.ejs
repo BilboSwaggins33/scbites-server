@@ -98,7 +98,9 @@
     <div class="section1">
         <div class="section1-header">
             <p style="color: white; font-family: source-sans-pro-bold,serif; font-size: large">SCBites</p>
-            <a target="_blank" href="https://hospitality.usc.edu/residential-dining-menus/" style="color: white; text-decoration: none; font-family: source-sans-pro-bold, serif">View menus online</a>
+            <a target="_blank" href="https://hospitality.usc.edu/residential-dining-menus/"
+               style="color: white; text-decoration: none; font-family: source-sans-pro-bold, serif">View menus
+                online</a>
         </div>
         <div class="divider" style="border-top: 3px solid #FFFFFF29;width: 100%"></div>
         <div class="section1-title">
@@ -121,43 +123,39 @@
         <div>
             <% let villageItems = emailData.filter((item) => item.location === "Village"); %>
             <% if (villageItems.length > 0) { %>
-            <div>
-                <img class="image" src="data:image/png;base64,<%= pic.village %>">
-            </div>
-            <div class="section2-header">
-                <h2 style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px">
-                    Village</h2>
-            </div>
-            <div class="section2-table" style="display: grid;width: 100%;grid-template-columns: 1fr 1fr 1fr;">
-                <% for (let i = 0; i < villageItems.length; i++) { %>
-                    <div style="font-family: 'source-sans-pro-bold',serif; padding: 10px;">
-                        <p style="padding:0; margin: 0; font-size: medium;"><%= villageItems[i].name %></p>
-                        <% let filteredTags = villageItems[i].tags.filter((tag) => {
-                            return userData.tags[legend[tag]]
-                        }) %>
-                        <% for (let j = 0; j < filteredTags.length; j++) { %>
+                <div>
+                    <img class="image" src="data:image/png;base64,<%= pic.village %>">
+                </div>
+                <div class="section2-header">
+                    <h2 style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px">
+                        Village</h2>
+                </div>
+                <div class="section2-table" style="display: grid;width: 100%;grid-template-columns: 1fr 1fr 1fr;">
+                    <% for (let i = 0; i < villageItems.length; i++) { %>
+                        <div style="font-family: 'source-sans-pro-bold',serif; padding: 10px;">
+                            <p style="padding:0; margin: 0; font-size: medium;"><%= villageItems[i].name %></p>
 
-                            <p style="padding-top:2px; margin: 0; font-size: small; color: gray">Vegan</p>
-                            <% if(j < filteredTags.length - 1){ %>
-                                &nbsp;
+                            <% let filteredTags = villageItems[i].tags.filter((tag) => {
+                                return userData.tags[legend[tag]]
+                            }) %>
+                            <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline"><%= villageItems[i].meal %></p>
+                            <% for (let j = 0; j < filteredTags.length; j++) { %>
                                 &#x2022;
-                                &nbsp;
-                            <% } else{ %>
-                                &nbsp;
+                                <p style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline"><%= filteredTags[j] %></p>
+
                             <% } %>
-                        <% } %>
 
-                    </div>
-                <% } %>
+                        </div>
+                    <% } %>
 
-            </div>
+                </div>
             <% } else { %>
 
                 <div class="section2-header">
                     <h2 style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px 0px">
                         No items today from Village.</h2>
                 </div>
-            <%}%>
+            <% } %>
         </div>
 
 
@@ -179,16 +177,12 @@
                             <% let filteredTags = evkItems[i].tags.filter((tag) => {
                                 return userData.tags[legend[tag]]
                             }) %>
-                            <% for (let j = 0; j < filteredTags.length; j++) { %>
 
-                                <p style="padding-top:2px; margin: 0; font-size: small; color: gray">Vegan</p>
-                                <% if(j < filteredTags.length - 1){ %>
-                                    &nbsp;
-                                    &#x2022;
-                                    &nbsp;
-                                <% } else{ %>
-                                    &nbsp;
-                                <% } %>
+                            <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline"><%= evkItems[i].meal %></p>
+                            <% for (let j = 0; j < filteredTags.length; j++) { %>
+                                &#x2022;
+                                <p style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline"><%= filteredTags[j] %></p>
+
                             <% } %>
 
                         </div>
@@ -202,7 +196,7 @@
                         No items today from EVK.</h2>
                 </div>
 
-            <%}%>
+            <% } %>
         </div>
         <!--   Parkside   -->
         <div>
@@ -222,16 +216,12 @@
                             <% let filteredTags = parksideItems[i].tags.filter((tag) => {
                                 return userData.tags[legend[tag]]
                             }) %>
-                            <% for (let j = 0; j < filteredTags.length; j++) { %>
 
-                                <p style="padding-top:2px; margin: 0; font-size: small; color: gray">Vegan</p>
-                                <% if(j < filteredTags.length - 1){ %>
-                                    &nbsp;
-                                    &#x2022;
-                                    &nbsp;
-                                <% } else{ %>
-                                    &nbsp;
-                                <% } %>
+                            <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline"><%= parksideItems[i].meal %></p>
+                            <% for (let j = 0; j < filteredTags.length; j++) { %>
+                                &#x2022;
+                                <p style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline"><%= filteredTags[j] %></p>
+
                             <% } %>
 
                         </div>
@@ -244,7 +234,7 @@
                     <h2 style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px 0px">
                         No items today from Parkside</h2>
                 </div>
-            <%}%>
+            <% } %>
         </div>
 
     </div>
