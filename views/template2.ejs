@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <style>
+
+
+        @font-face {
+            font-family: "source-sans-pro-bold";
+            src: url(https://fonts.cdnfonts.com/s/12183/SourceSansPro-Semibold.woff) format("woff");
+        }
+
+        @font-face {
+            font-family: "source-sans-pro-regular";
+            src: url(https://fonts.cdnfonts.com/s/12183/SourceSansPro-Regular.woff) format("woff");
+        }
+
+        body {
+            font-family: "source-sans-pro-regular", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .divider {
+            border-top: 3px solid #FFFFFF29;
+            width: 100%
+        }
+
+        .section1 {
+            background-color: #990000;
+            margin: 0;
+            display: flex;
+            align-items: start;
+            flex-direction: column;
+            width: 100%;
+            height: 220px;
+        }
+
+        .section1-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            padding: 0px 30px;
+        }
+
+        .section1-title {
+            padding: 30px
+        }
+
+        .section1-body {
+            display:flex;
+            justify-content: space-between;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 90%;
+            background-image: url("data:image/jpg;base64,<%= dronepic %>");
+        }
+
+        .website-button-container {
+            display: flex;
+            align-self: end;
+            padding: 0px 50px 30px 50px;
+        }
+
+        .website-button {
+            background-color: #FFF;
+            border: none;
+            color: #990000;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 30px;
+            font-family: source-sans-pro-bold, serif;
+            text-decoration: none;
+        }
+
+
+        .section2 {
+            background-color: white;
+            margin: 0;
+            width: 100%;
+            /* height: 440px; */
+        }
+
+        .section2-header {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 60px;
+        }
+
+        .section2-body {
+            display: flex;
+            padding: 20px;
+        }
+
+        .section2-loc {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .section2-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr
+        }
+        </style>
+    </head>
+    <body>
+
+        <div class="section1">
+            <div class="section1-header">
+                <p style="color: white; font-family: source-sans-pro-bold,serif; font-size: large">SCBites</p>
+                <a target="_blank" href="https://hospitality.usc.edu/residential-dining-menus/"
+                    style="color: white; text-decoration: none; font-family: source-sans-pro-bold, serif">View menus online</a>
+            </div>
+            <div class="divider" style="border-top: 3px solid #FFFFFF29;width: 100%"></div>
+            <div class="section1-body" style="">
+
+                <div class="section1-title">
+                    <p style="margin: 0; color: white; font-family: 'source-sans-pro-bold',serif; font-size: 42px">
+                        Don't miss your <br />
+                        next <span style="color: #FFCC00">bite.</span>
+                    </p>
+                </div>
+                <div class="website-button-container">
+                    <a target="_blank" href="https://scbites.rocks" class="website-button">Go to website</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="section2">
+            <div class="section2-header">
+                <h1 style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 10px">
+                    Today's <span style="color: #990000">dishes.</span></h1>
+            </div>
+
+            <div class="section2-body">
+
+                <div class="section2-loc">
+                    <% let evkItems=emailData.filter((item)=> item.location === "EVK"); %>
+                    <% if (evkItems.length> 0) { %>
+                    <div class="">
+                        <h3
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 15px; width: 60px;">
+                            Evk</h3>
+                    </div>
+                    <div class="section2-table" style="display: grid; grid-template-columns: 1fr 1fr )">
+                        <% for (let i=0; i < evkItems.length; i++) { %>
+                            <div style="font-family: 'source-sans-pro-bold',serif; padding: 10px;">
+                                <p style="padding:0; margin: 0; font-size: 12px;">
+                                    <%= evkItems[i].name %>
+                                </p>
+
+                                <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline">
+                                    <%= evkItems[i].meal %>
+                                </p>
+                                <% for (let j=0; j < evkItems[i].tags.length; j++) { %>
+                                    &#x2022;
+                                    <p
+                                        style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline">
+                                        <%= evkItems[i].tags[j] %>
+                                    </p>
+
+                                    <% } %>
+
+                            </div>
+                            <% } %>
+
+                    </div>
+                    <% } else { %>
+
+                    <div class="section2-header">
+                        <h4
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px 0px">
+                            No items today from Evk</h4>
+                    </div>
+                    <% } %>
+                </div>
+
+            </div>
+            <div class="section2-body">
+
+                <div class="section2-loc">
+                    <% let parksideItems=emailData.filter((item)=> item.location === "Parkside"); %>
+                    <% if (parksideItems.length> 0) { %>
+                    <div class="">
+                        <h4
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 15px; width: 60px; ">
+                            Parkside</h4>
+                    </div>
+                    <div class="section2-table" style="display: grid; grid-template-columns: 1fr 1fr )">
+                        <% for (let i=0; i < parksideItems.length; i++) { %>
+                            <div style="font-family: 'source-sans-pro-bold',serif; padding: 10px;">
+                                <p style="padding:0; margin: 0; font-size: 12px;">
+                                    <%= parksideItems[i].name %>
+                                </p>
+
+                                <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline">
+                                    <%= parksideItems[i].meal %>
+                                </p>
+                                <% for (let j=0; j < parksideItems[i].tags.length; j++) { %>
+                                    &#x2022;
+                                    <p
+                                        style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline">
+                                        <%= parksideItems[i].tags[j] %>
+                                    </p>
+
+                                    <% } %>
+
+                            </div>
+                            <% } %>
+
+                    </div>
+                    <% } else { %>
+
+                    <div class="section2-header">
+                        <h4
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px 0px">
+                            No items today from Parkside</h4>
+                    </div>
+                    <% } %>
+                </div>
+
+            </div>
+            <div class="section2-body">
+
+                <div class="section2-loc">
+                    <% let villageItems=emailData.filter((item)=> item.location === "Village"); %>
+                    <% if (villageItems.length> 0) { %>
+                    <div class="">
+                        <h3
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 15px; width: 60px;">
+                            Village</h3>
+                    </div>
+                    <div class="section2-table" style="display: grid; grid-template-columns: 1fr 1fr )">
+                        <% for (let i=0; i < villageItems.length; i++) { %>
+                            <div style="font-family: 'source-sans-pro-bold',serif; padding: 10px;">
+                                <p style="padding:0; margin: 0; font-size: 12px;">
+                                    <%= villageItems[i].name %>
+                                </p>
+
+                                <p style="padding:0; margin: 0; font-size: small; color: gray; display: inline">
+                                    <%= villageItems[i].meal %>
+                                </p>
+                                <% for (let j=0; j < villageItems[i].tags.length; j++) { %>
+                                    &#x2022;
+                                    <p
+                                        style="padding-top:2px; margin: 0; font-size: small; color: gray; display: inline">
+                                        <%= villageItems[i].tags[j] %>
+                                    </p>
+
+                                    <% } %>
+
+                            </div>
+                            <% } %>
+
+                    </div>
+                    <% } else { %>
+
+                    <div class="section2-header">
+                        <h4
+                            style="margin: 0; color: black; font-family: 'source-sans-pro-bold',serif; padding: 20px 0px">
+                            No items today from Village</h4>
+                    </div>
+                    <% } %>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+</html>

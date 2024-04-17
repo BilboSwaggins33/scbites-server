@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <link rel="icon" href="/images/favicon.ico" />
 </head>
+
 <body>
-<div class="toolbar">
+    <div class="toolbar">
 
-    <p style="color: white; margin-left: 20px; font-size: 1.5em;">USC Bites</p>
+        <p style="color: white; margin-left: 20px; font-size: 1.5em;">USC Bites</p>
 
-</div>
-
-<div class="main-container">
-    <div class="sub-container">
-        <div>
-            <p style="margin: 1px; padding: 1px; font-size: x-large">Reset your password.</p>
-            <p style="margin-top: 30px;">Password must be between 6 and 128 characters.</p>
-
-        </div>
-
-        <form class="form-container" action="/auth/resetPassword" method="get">
-            <input class="password-input" placeholder="Password" type="text" name="password" id="password">
-            <input type="hidden" name="token" id="token" value="<%= token %>"/>
-            <input type="hidden" name="tokenId" id="tokenId" value="<%= tokenId %>"/>
-            <button class="submit-button" type="submit">Submit</button>
-        </form>
     </div>
 
-</div>
-<script type="text/javascript">
+    <div class="main-container">
+        <div class="sub-container">
+            <div>
+                <p style="margin: 1px; padding: 1px; font-size: x-large">Reset your password.</p>
+                <p style="margin-top: 30px;">Password must be between 6 and 128 characters.</p>
 
-    showAlert = function (err) {
-        alert('There was an error: ' + err);
-    }
+            </div>
 
-    let error = '<%= error %>';
+            <form class="form-container" action="/auth/resetPassword" method="get">
+                <input class="password-input" placeholder="Password" type="text" name="password" id="password">
+                <input type="hidden" name="token" id="token" value="<%= token %>" />
+                <input type="hidden" name="tokenId" id="tokenId" value="<%= tokenId %>" />
+                <button class="submit-button" type="submit">Submit</button>
+            </form>
+        </div>
 
-    window.onload = () => {
-        setTimeout(function () {
-            if (error != "") {
-                showAlert(error);
-            }
-        }, 500);
-    }
+    </div>
+    <script type="text/javascript">
 
-</script>
+        showAlert = function (err) {
+            alert('There was an error: ' + err);
+        }
+
+        let error = '<%= error %>';
+
+        window.onload = () => {
+            setTimeout(function () {
+                if (error != "") {
+                    showAlert(error);
+                }
+            }, 500);
+        }
+
+    </script>
 </body>
+
 </html>

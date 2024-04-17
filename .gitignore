@@ -5,6 +5,8 @@ node_modules
 .pnp.js
 .idea
 
+routes/test.js
+
 # testing
 /coverage
 atlasConfig.json
