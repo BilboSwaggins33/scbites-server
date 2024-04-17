@@ -6,6 +6,9 @@
     "start": "nodemon ./bin/www",
     "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache"
   },
+  "engines": {
+    "node": "21.6.2"
+},
   "dependencies": {
     "@aws-sdk/client-ses": "^3.507.0",
     "axios": "^1.6.7",
