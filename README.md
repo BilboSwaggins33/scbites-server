@@ -66,7 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This repository serves as the express server for the website, https://sbites.rocks. It mostly deals with authenticating/managing Realm users,
+This repository serves as the express server for the website, https://scbites.rocks. It mostly deals with authenticating/managing Realm users,
 and using the AWS Simple Email Service combined with Nodemailer and Puppeteer to render and send pdfs to users. This job is automated on heroku. 
 Visit the scbite client repo to learn more about what scbites does at https://github.com/BilboSwaggins33/scbites-client
 
