@@ -26,7 +26,7 @@
     <a href="https://github.com/BilboSwaggins33/scbites-server"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://scbites.rocks">Website</a>
+    <a href="https://scbites.tech">Website</a>
     ·
     <a href="https://github.com/BilboSwaggins33/scbites-server/issues">Report Bug</a>
     ·
@@ -66,7 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This repository serves as the express server for the website, https://sbites.rocks. It mostly deals with authenticating/managing Realm users,
+This repository serves as the express server for the website, https://scbites.tech. It mostly deals with authenticating/managing Realm users,
 and using the AWS Simple Email Service combined with Nodemailer and Puppeteer to render and send pdfs to users. This job is automated on heroku. 
 Visit the scbite client repo to learn more about what scbites does at https://github.com/BilboSwaggins33/scbites-client
 
@@ -127,7 +127,7 @@ You will need to have node installed to run the project.
     
     
     DEVELOPMENT_CLIENT_URL='http://localhost:3000/' //frontend link
-    PRODUCTION_CLIENT_URL='https://scbites.rocks/';
+    PRODUCTION_CLIENT_URL='https://scbites.tech/';
    
     PORT='8000' //port
     MONGO_ID="" //realm app id
@@ -222,7 +222,7 @@ Project Link: [https://github.com/BilboSwaggins33/scbites-server](https://github
 [license-url]: https://github.com/BilboSwaggins33/scbites-server/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/aaron-zhang-2454401b6
-[SCBites Screen Shot]: https://scbites.rocks
+[SCBites Screen Shot]: https://scbites.tech
 [product-screenshot]: ./public/images/village_dining.jpg
 
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
